@@ -1,0 +1,7 @@
+﻿  main.cpp
+D:\dev\OS\os_lab6\subscriber\main.cpp(14,24): warning C4267: аргумент: преобразование из "size_t" в "const _Ty"; возможна потеря данных
+          with
+          [
+              _Ty=int
+          ]
+  subscriber.vcxproj -> D:\dev\OS\os_lab6\x64\Debug\subscriber.exe

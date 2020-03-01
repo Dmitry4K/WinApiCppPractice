@@ -1,0 +1,7 @@
+﻿main.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp__zmq_ctx_new в функции _main
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: int __thiscall Publisher::GetCommand(class std::basic_istream<char,struct std::char_traits<char> > &)" (?GetCommand@Publisher@@QAEHAAV?$basic_istream@DU?$char_traits@D@std@@@std@@@Z) в функции _main
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __thiscall Publisher::SendBufferedMessage(void)" (?SendBufferedMessage@Publisher@@QAEXXZ) в функции _main
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __thiscall Publisher::Publisher(void)" (??0Publisher@@QAE@XZ) в функции _main
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __thiscall Publisher::~Publisher(void)" (??1Publisher@@QAE@XZ) в функции _main
+D:\dev\OS\os_lab6\libzmq-v141-x64\libzmq-v141-mt-s-4_3_2.lib : warning LNK4272: тип компьютера библиотеки "x64" конфликтует с типом целевого компьютера "x86"
+D:\dev\OS\os_lab6\Debug\os_lab6.exe : fatal error LNK1120: неразрешенных внешних элементов: 5

@@ -3,29 +3,56 @@
 #include<vector>
 #include<thread>
 #include<string>
+#include<set>
 #include<mutex>
+#include<chrono>
 #include"BinarySearchTree.h"
 #include"Lib.h"
 
 
-void PullDumbThreadFunction(std::mutex& MTX) {
+void PullDumbThreadFunction(MyBSTree& Tree) {
     PullDumb PD;
+    bool isPingStart = false;
     std::string Buffer;
+    std::set<int> Ids;
+    auto t1 = std::chrono::high_resolution_clock::now();
     while (true) {
         Buffer = PD.GetMsg();
         if (Buffer == "exit")
             break;
-        std::cout << Buffer;
+        std::vector<std::string> Commands = split(Buffer);
+        
+        if (Commands[0] == "ping") {
+            Ids.insert(std::stoi(Commands[1]));
+            continue;
+        }
+        if(Commands[0] == "pend"){
+            if (Ids.size() == Tree.Size()) {
+                std::cout << "Ping: OK: -1\n";
+            }
+            else {
+                std::cout << "Ping: OK: ";
+                std::vector<int> Nodes = Tree.GetNodes();
+                for (int i = 0; i < Nodes.size();++i) {
+                        auto iter = Ids.find(Nodes[i]);
+                        if (iter == Ids.end()) {
+                            std::cout << Nodes[i] << " ";
+                        }
+                    }
+                std::cout << std::endl;
+            }
+            Ids.clear();
+        }
+        else {
+            std::cout << Buffer;
+        }
     }
 }
 
-
-
 int main() {
-    std::mutex MTX;
-    std::thread PullDumbThread(PullDumbThreadFunction, std::ref(MTX));
-	Publisher Pub;
     MyBSTree NodeMenedger;
+    std::thread PullDumbThread(PullDumbThreadFunction,std::ref(NodeMenedger));
+	Publisher Pub;
     Pub.SocketNum = 1;
     std::vector<std::string> Commands;
     std::string Line;
@@ -95,6 +122,12 @@ int main() {
                     std::cout << "Not found\n";
                 }
                 i += 3;
+            }
+            if (Commands[i] == "pingall") {
+                Subscriber s;
+                Pub.Publish("pingall");
+                Sleep(100);
+                s.PullMsg("pend");
             }
         }
         if (exit)

@@ -101,6 +101,17 @@ public:
 				}
 			}
 		}
+		void Size(int& S) {
+			if (!_Empty) {
+				++S;
+			}
+			if (_Left != nullptr) {
+				_Left->Size(S);
+			}
+			if (_Right != nullptr) {
+				_Right->Size(S);
+			}
+		}
 		void Destroy(std::queue<T>* UsedSockets) {
 			if (_Left != nullptr)
 				_Left->Destroy(UsedSockets);
@@ -140,6 +151,16 @@ public:
 			}
 			if (_Right != nullptr) {
 				_Right->Print(in, tabs + 1);
+			}
+		}
+		void GetNodes(std::vector<int>& res) {
+			if(!_Empty)
+				res.push_back(_Key.Id);
+			if (_Left != nullptr) {
+				_Left->GetNodes(res);
+			}
+			if (_Right != nullptr) {
+				_Right->GetNodes(res);
 			}
 		}
 		T Find(T Key) {
@@ -185,6 +206,20 @@ public:
 	}
 	MyBSTree(T Key) {
 		_Root = new MyBSTreeNode(Key);
+	}
+	int Size() {
+		int res = 0;
+		_Root->Size(res);
+		return res;
+	}
+	std::vector<int> GetNodes() {
+		std::vector<int> Res;
+		if (_Root != nullptr) {
+			if (!(_Root->_Empty)) {
+				_Root->GetNodes(Res);
+			}
+		}
+		return Res;
 	}
 	void Add(T Key) {
 		if (_Root->Empty()) {

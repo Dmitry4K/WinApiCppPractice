@@ -121,7 +121,7 @@ int main(int argc, char* argv[]) {
                     GetExitCodeProcess(sub.LeftChildHProcess, &StatusProcess1);
                     DWORD StatusProcess2;
                     GetExitCodeProcess(sub.RightChildHProcess, &StatusProcess2);
-                    std::cout << (StatusProcess1 == STILL_ACTIVE) << (StatusProcess2 == STILL_ACTIVE) << std::endl;
+                    //std::cout << (StatusProcess1 == STILL_ACTIVE) << (StatusProcess2 == STILL_ACTIVE) << std::endl;
                     std::cout << std::stoi(Commands[i]) << sub.LeftChildId << sub.RightChildId << std::endl;
                     if((std::stoi(Commands[i]) == sub.LeftChildId) && (StatusProcess1 != STILL_ACTIVE)){
                             sub.PullMsg("Error: Node is unavaible\n");
@@ -154,6 +154,10 @@ int main(int argc, char* argv[]) {
                 else {
                     sub.Publish(Commands[i - 1] + ' ' + Commands[i]);
                 }
+            }
+            if (Commands[i] == "pingall") {
+                sub.PullMsg("ping " + std::to_string(sub.Id));
+                sub.Publish("pingall");
             }
         }
         if (exit)
